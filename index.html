@@ -25,9 +25,9 @@
         text-align: center;
     }
     header img {
-        height: 70px;     /* logo height */
-        display: block;   /* makes centering work */
-        margin: 0 auto;   /* centers the logo */
+        height: 70px;     
+        display: block;   
+        margin: 0 auto;   
     }
     .form-container {
         max-width: 500px;
@@ -93,7 +93,7 @@
 
 <div class="form-container">
     <h2>CALCULATOR FOR CIF LCL SHIPMENT FROM SHANGHAI TO INDIA</h2>
-    <form id="contactForm" action="https://formspree.io/f/xrbygqyq" method="POST">
+    <form id="contactForm" action="https://formspree.io/f/xovkjnge" method="POST">
         <label for="name">Contact Name</label>
         <input type="text" name="name" id="name" required>
 
@@ -155,7 +155,7 @@ document.getElementById("contactForm").addEventListener("submit", async function
     const formData = new FormData(form);
 
     const cbm = parseFloat(document.getElementById("cbm").value) || 0;
-    const weight = parseInt(document.getElementById("weight").value) || 0;
+    const weight = parseInt(document.getElementById("weight").value) || 0; // integer only
     const location = document.getElementById("location").value.toLowerCase();
     const cargo = document.getElementById("cargo").value.toLowerCase();
 
@@ -164,39 +164,35 @@ document.getElementById("contactForm").addEventListener("submit", async function
         return;
     }
 
+    // Chargeable Weight (CW)
+    const CW = Math.max(cbm, weight);
+
     let originCharges = 0;
     let destinationCharges = 0;
 
-    // === General Cargo ===
-    if ((location === "chennai" && cargo === "general cargo") || 
-        (location === "nhava sheva" && cargo === "general cargo")) {
+    // === General Cargo (Chennai & Nhava Sheva) ===
+    if (cargo === "general cargo") {
+        originCharges = (CW * 40) + 150;
 
-        const A = Math.max(cbm, weight);
-        originCharges = (A * 40) + 150;
+        const F = (950 * CW) + 5500 + 7500;
+        const H1 = F * 1.18; // includes 18% tax
 
-        let F = (950 * A) + 5500 + 7500;
-        let G1 = F * 0.18;
-        let H1 = F + G1;
-
-        let destinationFactor = (location === "chennai") ? 3500 : 4500;
-        let I = (380 * A) + (destinationFactor * A) + 3200;
-        let G2 = I * 0.18;
-        let H2 = I + G2;
+        const destinationFactor = (location === "chennai") ? 3500 : 4500;
+        const I = (380 * CW) + (destinationFactor * CW) + 3200;
+        const H2 = I * 1.18; // includes 18% tax
 
         destinationCharges = H1 + H2;
 
-    // === DG Cargo (Chennai only here) ===
-    } else if (location === "chennai" && cargo === "dg cargo") {
-        const B = Math.max(cbm, weight);
+    // === DG Cargo (Chennai & Nhava Sheva) ===
+    } else if (cargo === "dg cargo") {
+        originCharges = (CW * 280) + 2210;
 
-        originCharges = (B * 280) + 2210;
-        let C = (1400 * B) + 5500 + 7500;
-        let D = C * 0.18;
-        let BS1 = C + D;
+        const C = (1400 * CW) + 5500 + 7500;
+        const BS1 = C * 1.18;
 
-        let W = (380 * B) + (6200 * B) + 4200;
-        let X = W * 0.18;
-        let BS2 = W + X;
+        const destinationFactor = 6200; // same for both locations
+        const W = (380 * CW) + (destinationFactor * CW) + 4200;
+        const BS2 = W * 1.18;
 
         destinationCharges = BS1 + BS2;
 
@@ -249,7 +245,7 @@ function showResult(location, cargo, originCharges, destinationCharges, success 
     `;
 }
 
-// Prevent decimals in weight
+// Prevent non-numeric and decimal input for weight
 document.getElementById("weight").addEventListener("input", function() {
     this.value = this.value.replace(/\D/g, "");
 });
@@ -264,5 +260,3 @@ document.getElementById("cbm").addEventListener("blur", function() {
 
 </body>
 </html>
-
-
