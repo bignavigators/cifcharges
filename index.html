@@ -94,34 +94,34 @@
 <div class="form-container">
     <h2>CALCULATOR FOR CIF LCL SHIPMENT FROM SHANGHAI TO INDIA</h2>
     <form id="contactForm" action="https://formspree.io/f/xrbygqyq" method="POST">
-        <label for="name">Contact Name</label>
+        <label for="Contact Name">Contact Name</label>
         <input type="text" name="name" id="name" required>
 
-        <label for="email">Email</label>
+        <label for="Email Address">Email Address</label>
         <input type="email" name="email" id="email" required placeholder="example@email.com">
 
-        <label for="phone">Phone Number</label>
+        <label for="Phone Number">Phone Number</label>
         <input type="tel" name="phone" id="phone" required 
                pattern="[0-9]{10,15}" 
                title="Phone number must be between 10 and 15 digits">
 
-        <label for="company">Company Name</label>
+        <label for="Company Name">Company Name</label>
         <input type="text" name="company" id="company" required>
 
-        <label for="cbm">Enter CBM</label>
+        <label for="CBM">Enter CBM</label>
         <input type="number" name="cbm" id="cbm" required step="0.01" placeholder="e.g., 12.34">
 
-        <label for="weight">Enter Weight (Tonne)</label>
+        <label for="Weight">Enter Weight (Tonne)</label>
         <input type="number" name="weight" id="weight" required step="1" placeholder="e.g., 12">
 
-        <label for="location">Location</label>
+        <label for="Location">Location</label>
         <select name="location" id="location" required>
             <option value="">-- Select Location --</option>
             <option value="chennai">Chennai</option>
             <option value="nhava sheva">Nhava Sheva</option>
         </select>
 
-        <label for="cargo">Cargo Type</label>
+        <label for="Cargo">Cargo Type</label>
         <select name="cargo" id="cargo" required>
             <option value="">-- Select Cargo Type --</option>
             <option value="general cargo">General Cargo</option>
@@ -129,11 +129,11 @@
         </select>
 
         <!-- Hidden fields -->
-        <input type="hidden" name="originCharges" id="originCharges">
-        <input type="hidden" name="destinationCharges" id="destinationCharges">
-        <input type="hidden" name="thankyouMessage" id="thankyouMessage">
-        <input type="hidden" name="submittedCBM" id="submittedCBM">
-        <input type="hidden" name="submittedWeight" id="submittedWeight">
+        <input type="hidden" name="Origin Charges" id="originCharges">
+        <input type="hidden" name="Destination Charges" id="destinationCharges">
+ <input type="hidden" name="Thankyou Message" id="thankyoumessage">
+       <input type="hidden" name="Submitted CBM" id="submittedCBM">
+        <input type="hidden" name="Submitted Weight" id="submittedWeight">
 
         <button type="submit">Submit</button>
     </form>
@@ -175,11 +175,11 @@ document.getElementById("contactForm").addEventListener("submit", async function
         originCharges = (CW * 40) + 150;
 
         const F = (950 * CW) + 5500 + 7500;
-        const H1 = F * 1.18; // includes 18% tax
+        const H1 = F * 0.18; // includes 18% tax
 
         const destinationFactor = (location === "chennai") ? 3500 : 4500;
         const I = (380 * CW) + (destinationFactor * CW) + 3200;
-        const H2 = I * 1.18; // includes 18% tax
+        const H2 = I * 0.18; // includes 18% tax
 
         destinationCharges = H1 + H2;
 
@@ -188,11 +188,11 @@ document.getElementById("contactForm").addEventListener("submit", async function
         originCharges = (CW * 280) + 2210;
 
         const C = (1400 * CW) + 5500 + 7500;
-        const BS1 = C * 1.18;
+        const BS1 = C * 0.18;
 
         const destinationFactor = 6200; // same for both locations
         const W = (380 * CW) + (destinationFactor * CW) + 4200;
-        const BS2 = W * 1.18;
+        const BS2 = W * 0.18;
 
         destinationCharges = BS1 + BS2;
 
@@ -263,4 +263,5 @@ document.getElementById("cbm").addEventListener("blur", function() {
 
 </body>
 </html>
+
 
