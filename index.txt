@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Big Navigators - Home</title>
+<style>
+   body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+
+        /* Logistics Port Background */
+        background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+                    url('image1.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+    header {
+        background-color: #0b74de;
+        text-align: center;
+    }
+    header img {
+        height: 70px;     /* logo height */
+        display: block;   /* makes centering work */
+        margin: 0 auto;   /* centers the logo */
+    }
+    .form-container {
+        max-width: 500px;
+        margin: 40px auto;
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
+    }
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #0b74de;
+    }
+    label {
+        display: block;
+        margin: 10px 0 5px;
+        font-weight: bold;
+    }
+    input, select {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        margin-bottom: 15px;
+    }
+    button {
+        width: 100%;
+        padding: 12px;
+        background: #0b74de;
+        border: none;
+        color: white;
+        font-size: 18px;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+    button:hover {
+        background: #095bb5;
+    }
+    #resultBox {
+        margin-top: 20px;
+        padding: 15px;
+        background: #eaf6ff;
+        border-left: 5px solid #0b74de;
+        display: none;
+    }
+    footer {
+        background-color: #0b74de;
+        color: white;
+        text-align: center;
+        padding: 15px;
+        font-size: 14px;
+        margin-top: auto;
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <img src="bnlogo.jpg" alt="Company Logo" class="logo">
+</header>
+
+<div class="form-container">
+    <h2>CALCULATOR FOR CIF LCL SHIPMENT FROM SHANGHAI TO INDIA</h2>
+    <form id="contactForm" action="https://formspree.io/f/xovkjnge" method="POST">
+        <label for="name">Contact Name</label>
+        <input type="text" name="name" id="name" required>
+
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" required placeholder="example@email.com">
+
+        <label for="phone">Phone Number</label>
+        <input type="tel" name="phone" id="phone" required 
+               pattern="[0-9]{10,15}" 
+               title="Phone number must be between 10 and 15 digits">
+
+        <label for="company">Company Name</label>
+        <input type="text" name="company" id="company" required>
+
+        <label for="cbm">Enter CBM</label>
+        <input type="number" name="cbm" id="cbm" required step="0.01" placeholder="e.g., 12.34">
+
+        <label for="weight">Enter Weight (Tonne)</label>
+        <input type="number" name="weight" id="weight" required step="1" placeholder="e.g., 12">
+
+        <label for="location">Location</label>
+        <select name="location" id="location" required>
+            <option value="">-- Select Location --</option>
+            <option value="chennai">Chennai</option>
+            <option value="nhava sheva">Nhava Sheva</option>
+        </select>
+
+        <label for="cargo">Cargo Type</label>
+        <select name="cargo" id="cargo" required>
+            <option value="">-- Select Cargo Type --</option>
+            <option value="general cargo">General Cargo</option>
+            <option value="dg cargo">DG Cargo</option>
+        </select>
+
+        <!-- Hidden fields -->
+        <input type="hidden" name="originCharges" id="originCharges">
+        <input type="hidden" name="destinationCharges" id="destinationCharges">
+        <input type="hidden" name="thankyouMessage" id="thankyouMessage">
+        <input type="hidden" name="submittedCBM" id="submittedCBM">
+        <input type="hidden" name="submittedWeight" id="submittedWeight">
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <div id="resultBox"></div>
+</div>
+
+<footer>
+    <p>DG Acceptance Class 2.2/3/4.1/6.1/8/9*</p>
+    <p>📦 Transit Time: Shanghai to Chennai – 20 Days | Shanghai to Nhava Sheva – 22 Days</p>
+    <p>&copy; 2025 Big Navigators Pvt Ltd. All Rights Reserved.</p>
+</footer>
+
+<script>
+document.getElementById("contactForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const formData = new FormData(form);
+
+    const cbm = parseFloat(document.getElementById("cbm").value) || 0;
+    const weight = parseInt(document.getElementById("weight").value) || 0;
+    const location = document.getElementById("location").value.toLowerCase();
+    const cargo = document.getElementById("cargo").value.toLowerCase();
+
+    if (!location || !cargo) {
+        alert("Please select both location and cargo type.");
+        return;
+    }
+
+    let originCharges = 0;
+    let destinationCharges = 0;
+
+    // === General Cargo ===
+    if ((location === "chennai" && cargo === "general cargo") || 
+        (location === "nhava sheva" && cargo === "general cargo")) {
+
+        const A = Math.max(cbm, weight);
+        originCharges = (A * 40) + 150;
+
+        let F = (950 * A) + 5500 + 7500;
+        let G1 = F * 0.18;
+        let H1 = F + G1;
+
+        let destinationFactor = (location === "chennai") ? 3500 : 4500;
+        let I = (380 * A) + (destinationFactor * A) + 3200;
+        let G2 = I * 0.18;
+        let H2 = I + G2;
+
+        destinationCharges = H1 + H2;
+
+    // === DG Cargo (Chennai only here) ===
+    } else if (location === "chennai" && cargo === "dg cargo") {
+        const B = Math.max(cbm, weight);
+
+        originCharges = (B * 280) + 2210;
+        let C = (1400 * B) + 5500 + 7500;
+        let D = C * 0.18;
+        let BS1 = C + D;
+
+        let W = (380 * B) + (6200 * B) + 4200;
+        let X = W * 0.18;
+        let BS2 = W + X;
+
+        destinationCharges = BS1 + BS2;
+
+    } else {
+        alert("Calculation logic for this cargo type or location is not yet added.");
+        return;
+    }
+
+    // Put results in hidden inputs for email
+    document.getElementById("originCharges").value = originCharges.toFixed(2);
+    document.getElementById("destinationCharges").value = destinationCharges.toFixed(2);
+    document.getElementById("thankyouMessage").value = "Thank you for choosing Big Navigators Pvt Ltd.";
+    document.getElementById("submittedCBM").value = cbm.toFixed(2);
+    document.getElementById("submittedWeight").value = weight;
+
+    // === Send to Formspree without redirect ===
+    try {
+        const response = await fetch(form.action, {
+            method: form.method,
+            body: formData,
+            headers: { "Accept": "application/json" }
+        });
+
+        if (response.ok) {
+            showResult(location, cargo, originCharges, destinationCharges, true);
+            form.reset();
+        } else {
+            showResult(location, cargo, originCharges, destinationCharges, false);
+        }
+    } catch (err) {
+        showResult(location, cargo, originCharges, destinationCharges, false);
+    }
+});
+
+// Display result inside page
+function showResult(location, cargo, originCharges, destinationCharges, success = true) {
+    const heading = (location === "chennai") 
+        ? "Chennai CIF Shipment" 
+        : "Nhava Sheva CIF Shipment";
+
+    const resultBox = document.getElementById("resultBox");
+    resultBox.style.display = "block";
+    resultBox.innerHTML = `
+        <h3>${heading} - ${cargo.toUpperCase()}</h3>
+        <p><strong>Total Origin Charges: RMB</strong> ${originCharges.toFixed(2)}</p>
+        <p><strong>Total Destination Charges: INR</strong> ${destinationCharges.toFixed(2)}</p>
+        <p style="color:${success ? 'green' : 'red'}">
+            ${success ? "✅ Your form was submitted successfully!" : "❌ There was a problem sending your form."}
+        </p>
+    `;
+}
+
+// Prevent decimals in weight
+document.getElementById("weight").addEventListener("input", function() {
+    this.value = this.value.replace(/\D/g, "");
+});
+
+// Format CBM to 2 decimals
+document.getElementById("cbm").addEventListener("blur", function() {
+    if(this.value) {
+        this.value = parseFloat(this.value).toFixed(2);
+    }
+});
+</script>
+
+</body>
+</html>
+
