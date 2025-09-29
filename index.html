@@ -93,7 +93,7 @@
 
 <div class="form-container">
     <h2>CALCULATOR FOR CIF LCL SHIPMENT FROM SHANGHAI TO INDIA</h2>
-    <form id="contactForm" action="https://formspree.io/f/xrbygqyq" method="POST">
+    <form id="contactForm" action="https://formspree.io/f/xovkjnge" method="POST">
         <label for="name">Contact Name</label>
         <input type="text" name="name" id="name" required>
 
@@ -186,7 +186,8 @@ document.getElementById("contactForm").addEventListener("submit", async function
         destinationCharges = H1 + H2;
 
     // === DG Cargo (Chennai only here) ===
-    } else if (location === "chennai" && cargo === "dg cargo") {
+    }  else if ((location === "chennai" && cargo === "dg cargo") || 
+           (location === "nhava sheva" && cargo === "dg cargo")) {
         const B = Math.max(cbm, weight);
 
         originCharges = (B * 280) + 2210;
@@ -243,6 +244,10 @@ function showResult(location, cargo, originCharges, destinationCharges, success 
         <h3>${heading} - ${cargo.toUpperCase()}</h3>
         <p><strong>Total Origin Charges: RMB</strong> ${originCharges.toFixed(2)}</p>
         <p><strong>Total Destination Charges: INR</strong> ${destinationCharges.toFixed(2)}</p>
+<p><strong>Note : </strong> Destination Charges (including GST)</p>
+<p>Above charges are exclusive of ocean freight </p>
+<p>Please check with our local agent for ocean freight</p>
+<p>Thank you for choosing Big Navigators </p>
         <p style="color:${success ? 'green' : 'red'}">
             ${success ? "✅ Your form was submitted successfully!" : "❌ There was a problem sending your form."}
         </p>
