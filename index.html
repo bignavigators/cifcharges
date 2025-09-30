@@ -152,7 +152,6 @@ document.getElementById("contactForm").addEventListener("submit", async function
     e.preventDefault();
 
     const form = e.target;
-    const formData = new FormData(form);
 
     const cbm = parseFloat(document.getElementById("cbm").value) || 0;
     const weight = parseInt(document.getElementById("weight").value) || 0; // integer only
@@ -201,12 +200,15 @@ document.getElementById("contactForm").addEventListener("submit", async function
         return;
     }
 
-    // Put results in hidden inputs for email
+    // === Update hidden fields ===
     document.getElementById("originCharges").value = originCharges.toFixed(2);
     document.getElementById("destinationCharges").value = destinationCharges.toFixed(2);
-    document.getElementById("thankyouMessage").value = "Thank you for choosing Big Navigators Pvt Ltd.";
+    document.getElementById("thankyoumessage").value = "Thank you for choosing Big Navigators Pvt Ltd.";
     document.getElementById("submittedCBM").value = cbm.toFixed(2);
     document.getElementById("submittedWeight").value = weight;
+
+    // === Rebuild FormData AFTER updating hidden inputs ===
+    const formData = new FormData(form);
 
     // === Send to Formspree without redirect ===
     try {
@@ -263,5 +265,6 @@ document.getElementById("cbm").addEventListener("blur", function() {
 
 </body>
 </html>
+
 
 
