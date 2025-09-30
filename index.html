@@ -175,12 +175,14 @@ document.getElementById("contactForm").addEventListener("submit", async function
 
         const F = (950 * CW) + 5500 + 7500;
         const H1 = F * 0.18; // includes 18% tax
+	const KL1=F + H1;
 
         const destinationFactor = (location === "chennai") ? 3500 : 4500;
         const I = (380 * CW) + (destinationFactor * CW) + 3200;
         const H2 = I * 0.18; // includes 18% tax
+	const KL2=I + H2
 
-        destinationCharges = H1 + H2;
+        destinationCharges = KL1 + KL2;
 
     // === DG Cargo (Chennai & Nhava Sheva) ===
     } else if (cargo === "dg cargo") {
@@ -188,13 +190,14 @@ document.getElementById("contactForm").addEventListener("submit", async function
 
         const C = (1400 * CW) + 5500 + 7500;
         const BS1 = C * 0.18;
+	const QR1 = C+BS1;
 
         const destinationFactor = 6200; // same for both locations
         const W = (380 * CW) + (destinationFactor * CW) + 4200;
         const BS2 = W * 0.18;
+	const QR2 = W+BS2;
 
-        destinationCharges = BS1 + BS2;
-
+        destinationCharges = QR1 + QR2;
     } else {
         alert("Calculation logic for this cargo type or location is not yet added.");
         return;
@@ -265,6 +268,7 @@ document.getElementById("cbm").addEventListener("blur", function() {
 
 </body>
 </html>
+
 
 
 
