@@ -165,6 +165,8 @@ const translations = {
         weight: "Enter Weight (Tonne)",
         location: "Location",
         cargo: "Cargo Type",
+        locationOptions: { chennai: "Chennai", "nhava sheva": "Nhava Sheva" },
+        cargoOptions: { "general cargo": "General Cargo", "dg cargo": "DG Cargo" },
         submit: "Submit",
         resultHeading: { chennai: "Chennai CIF Shipment", "nhava sheva": "Nhava Sheva CIF Shipment" },
         totalOrigin: "Total Origin Charges: RMB",
@@ -187,6 +189,8 @@ const translations = {
         weight: "输入重量 (吨)",
         location: "目的港",
         cargo: "货物类型",
+        locationOptions: { chennai: "钦奈", "nhava sheva": "纳瓦谢瓦" },
+        cargoOptions: { "general cargo": "普通货物", "dg cargo": "危险品货物" },
         submit: "提交",
         resultHeading: { chennai: "钦奈 CIF 货运", "nhava sheva": "纳瓦谢瓦 CIF 货运" },
         totalOrigin: "起运地费用: RMB",
@@ -201,6 +205,7 @@ const translations = {
 };
 
 let currentLang = "en";
+
 document.getElementById("languageSelect").addEventListener("change", function() {
     currentLang = this.value;
     setLanguage(currentLang);
@@ -208,6 +213,8 @@ document.getElementById("languageSelect").addEventListener("change", function() 
 
 function setLanguage(lang) {
     const t = translations[lang];
+
+    // Labels
     document.getElementById("formTitle").textContent = t.title;
     document.getElementById("labelLanguage").textContent = t.language + " / 选择语言";
     document.getElementById("labelName").textContent = t.name;
@@ -220,10 +227,20 @@ function setLanguage(lang) {
     document.getElementById("labelCargo").textContent = t.cargo;
     document.getElementById("submitButton").textContent = t.submit;
     document.getElementById("footerText").innerHTML = t.footer;
+
+    // Update dropdowns
+    const locationSelect = document.getElementById("location");
+    const cargoSelect = document.getElementById("cargo");
+
+    locationSelect.options[1].textContent = t.locationOptions.chennai;
+    locationSelect.options[2].textContent = t.locationOptions["nhava sheva"];
+    cargoSelect.options[1].textContent = t.cargoOptions["general cargo"];
+    cargoSelect.options[2].textContent = t.cargoOptions["dg cargo"];
 }
 
 setLanguage("en");
 
+// Rest of your script (calculations, submission, etc.) remains same
 document.getElementById("contactForm").addEventListener("submit", async function(e) {
     e.preventDefault();
 
@@ -281,7 +298,7 @@ function showResult(location, cargo, originCharges, destinationCharges, success)
     const resultBox = document.getElementById("resultBox");
     resultBox.style.display = "block";
     resultBox.innerHTML = `
-        <h3>${heading} - ${cargo.toUpperCase()}</h3>
+        <h3>${heading} - ${t.cargoOptions[cargo]}</h3>
         <p><strong>${t.totalOrigin}</strong> ${originCharges.toFixed(2)}</p>
         <p><strong>${t.totalDest}</strong> ${destinationCharges.toFixed(2)}</p>
         <p>${t.note}</p>
