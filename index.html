@@ -23,9 +23,9 @@
         text-align: center;
     }
     header img {
-        height: 70px;     
-        display: block;   
-        margin: 0 auto;   
+        height: 70px;
+        display: block;
+        margin: 0 auto;
     }
     .form-container {
         max-width: 500px;
@@ -93,7 +93,7 @@
     <h2 id="formTitle">CALCULATOR FOR CIF LCL SHIPMENT FROM SHANGHAI TO INDIA</h2>
     <form id="contactForm" action="https://formspree.io/f/xrbygqyq" method="POST">
 
-        <!-- Language Switch inside form -->
+        <!-- Language Switch -->
         <label for="languageSelect" id="labelLanguage">Choose Language / 选择语言</label>
         <select id="languageSelect">
             <option value="en">English</option>
@@ -107,9 +107,7 @@
         <input type="email" name="email" id="email" required placeholder="example@email.com">
 
         <label id="labelPhone" for="phone">Phone Number</label>
-        <input type="tel" name="phone" id="phone" required 
-               pattern="[0-9]{10,15}" 
-               title="Phone number must be between 10 and 15 digits">
+        <input type="tel" name="phone" id="phone" required pattern="[0-9]{10,15}" title="Phone number must be between 10 and 15 digits">
 
         <label id="labelCompany" for="company">Company Name</label>
         <input type="text" name="company" id="company" required>
@@ -213,8 +211,6 @@ document.getElementById("languageSelect").addEventListener("change", function() 
 
 function setLanguage(lang) {
     const t = translations[lang];
-
-    // Labels
     document.getElementById("formTitle").textContent = t.title;
     document.getElementById("labelLanguage").textContent = t.language + " / 选择语言";
     document.getElementById("labelName").textContent = t.name;
@@ -228,22 +224,18 @@ function setLanguage(lang) {
     document.getElementById("submitButton").textContent = t.submit;
     document.getElementById("footerText").innerHTML = t.footer;
 
-    // Update dropdowns
     const locationSelect = document.getElementById("location");
     const cargoSelect = document.getElementById("cargo");
-
     locationSelect.options[1].textContent = t.locationOptions.chennai;
     locationSelect.options[2].textContent = t.locationOptions["nhava sheva"];
     cargoSelect.options[1].textContent = t.cargoOptions["general cargo"];
     cargoSelect.options[2].textContent = t.cargoOptions["dg cargo"];
 }
-
 setLanguage("en");
 
-// Rest of your script (calculations, submission, etc.) remains same
+// Calculation + Result
 document.getElementById("contactForm").addEventListener("submit", async function(e) {
     e.preventDefault();
-
     const form = e.target;
     const cbm = parseFloat(document.getElementById("cbm").value) || 0;
     const weight = parseInt(document.getElementById("weight").value) || 0;
@@ -294,11 +286,12 @@ document.getElementById("contactForm").addEventListener("submit", async function
 
 function showResult(location, cargo, originCharges, destinationCharges, success) {
     const t = translations[currentLang];
-    const heading = t.resultHeading[location];
+    const locName = t.locationOptions[location];
+    const cargoName = t.cargoOptions[cargo];
     const resultBox = document.getElementById("resultBox");
     resultBox.style.display = "block";
     resultBox.innerHTML = `
-        <h3>${heading} - ${t.cargoOptions[cargo]}</h3>
+        <h3>${locName} - ${cargoName}</h3>
         <p><strong>${t.totalOrigin}</strong> ${originCharges.toFixed(2)}</p>
         <p><strong>${t.totalDest}</strong> ${destinationCharges.toFixed(2)}</p>
         <p>${t.note}</p>
