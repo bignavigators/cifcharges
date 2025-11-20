@@ -168,8 +168,8 @@ const translations = {
         submit: "Submit",
         resultHeading: { chennai: "Chennai CIF Shipment", "nhava sheva": "Nhava Sheva CIF Shipment" },
         totalOrigin: "Total Origin Charges: RMB",
-		destinationdeliverycharges: "Destination Delivery Charges: ",
-		destinationcfschrges: "Destination CFS Charges: ",
+		destinationdeliverycharges: "Destination Delivery Charges: INR",
+		destinationcfschrges: "Destination CFS Charges: INR",
         totalDest: "Total Destination Charges: INR",
         note: "Note: Destination Charges (including GST)",
         excl: "Above charges are exclusive of ocean freight",
@@ -260,7 +260,7 @@ document.getElementById("contactForm").addEventListener("submit", async function
         const I = (380 * CW) + (destinationFactor * CW) + 3200;
         const KL2 = I + (I * 0.18);
 	destination delivery charges = KL1;
-	destination CFS charges = KL2;
+	destination cfs charges = KL2;
         destinationCharges = KL1 + KL2;
     } else if (cargo === "dg cargo") {
         originCharges = (CW * 280) + 2210;
@@ -269,7 +269,7 @@ document.getElementById("contactForm").addEventListener("submit", async function
         const W = (380 * CW) + (6200 * CW) + 4200;
         const QR2 = W + (W * 0.18);
         destination delivery charges = QR1;
-	destination CFS charges = QR2;
+	destination cfs charges = QR2;
         destinationCharges = QR1 + QR2;
     }
 
@@ -320,4 +320,5 @@ document.getElementById("cbm").addEventListener("blur", function() {
 </script>
 </body>
 </html>
+
 
