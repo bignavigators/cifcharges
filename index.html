@@ -168,8 +168,6 @@ const translations = {
         submit: "Submit",
         resultHeading: { chennai: "Chennai CIF Shipment", "nhava sheva": "Nhava Sheva CIF Shipment" },
         totalOrigin: "Total Origin Charges: RMB",
-		destinationdeliverycharges: "Destination Delivery Charges: INR",
-		destinationcfschrges: "Destination CFS Charges: INR",
         totalDest: "Total Destination Charges: INR",
         note: "Note: Destination Charges (including GST)",
         excl: "Above charges are exclusive of ocean freight",
@@ -259,8 +257,6 @@ document.getElementById("contactForm").addEventListener("submit", async function
         const destinationFactor = (location === "chennai") ? 3500 : 4500;
         const I = (380 * CW) + (destinationFactor * CW) + 3200;
         const KL2 = I + (I * 0.18);
-	destination delivery charges = KL1;
-	destination cfs charges = KL2;
         destinationCharges = KL1 + KL2;
     } else if (cargo === "dg cargo") {
         originCharges = (CW * 280) + 2210;
@@ -268,14 +264,10 @@ document.getElementById("contactForm").addEventListener("submit", async function
         const QR1 = C + (C * 0.18);
         const W = (380 * CW) + (6200 * CW) + 4200;
         const QR2 = W + (W * 0.18);
-        destination delivery charges = QR1;
-	destination cfs charges = QR2;
         destinationCharges = QR1 + QR2;
     }
 
     document.getElementById("originCharges").value = originCharges.toFixed(2);
-    document.getElementById("destinationdeliverycharges").value = destinationdeliverycharges.toFixed(2);
-    document.getElementById("destinationcfscharges").value = destinationcfscharges.toFixed(2);
     document.getElementById("destinationCharges").value = destinationCharges.toFixed(2);
     document.getElementById("thankyoumessage").value = "Thank you for choosing Big Navigators Pvt Ltd.";
     document.getElementById("submittedCBM").value = cbm.toFixed(2);
@@ -292,7 +284,7 @@ document.getElementById("contactForm").addEventListener("submit", async function
     }
 });
 
-function showResult(location, cargo, originCharges, destinationdeliverycharges, destinationcfscharges, destinationCharges, success) {
+function showResult(location, cargo, originCharges, destinationCharges, success) {
     const t = translations[currentLang];
     const locName = t.locationOptions[location];
     const cargoName = t.cargoOptions[cargo];
@@ -301,8 +293,6 @@ function showResult(location, cargo, originCharges, destinationdeliverycharges, 
     resultBox.innerHTML = `
         <h3>${locName} - ${cargoName}</h3>
         <p><strong>${t.totalOrigin}</strong> ${originCharges.toFixed(2)}</p>
-        <p><strong>${t.destinationdeliverycharges}</strong> ${destinationdeliverycharges.toFixed(2)}</p>
-        <p><strong>${t.destinationcfscharges}</strong> ${destinationcfscharges.toFixed(2)}</p>
         <p><strong>${t.totalDest}</strong> ${destinationCharges.toFixed(2)}</p>
         <p>${t.note}</p>
         <p>${t.excl}</p>
@@ -320,5 +310,3 @@ document.getElementById("cbm").addEventListener("blur", function() {
 </script>
 </body>
 </html>
-
-
