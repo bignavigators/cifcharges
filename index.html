@@ -4,8 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Big Navigators - Home</title>
+
 <style>
-   body {
+    body {
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
@@ -16,7 +17,6 @@
                     url('image1.jpg');
         background-size: cover;
         background-position: center;
-        background-repeat: no-repeat;
     }
     header {
         background-color: #0b74de;
@@ -24,8 +24,8 @@
     }
     header img {
         height: 70px;
-        display: block;
         margin: 0 auto;
+        display: block;
     }
     .form-container {
         max-width: 500px;
@@ -33,35 +33,35 @@
         background: white;
         padding: 30px;
         border-radius: 10px;
-        box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     }
     h2 {
         text-align: center;
-        margin-bottom: 20px;
         color: #0b74de;
     }
     label {
         display: block;
-        margin: 10px 0 5px;
+        margin-top: 10px;
         font-weight: bold;
     }
     input, select {
         width: 100%;
         padding: 10px;
-        font-size: 16px;
-        border: 1px solid #ccc;
+        margin-top: 5px;
         border-radius: 6px;
-        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        font-size: 16px;
     }
     button {
         width: 100%;
         padding: 12px;
         background: #0b74de;
-        border: none;
         color: white;
-        font-size: 18px;
+        border: none;
         border-radius: 6px;
+        font-size: 18px;
         cursor: pointer;
+        margin-top: 20px;
     }
     button:hover {
         background: #095bb5;
@@ -74,69 +74,74 @@
         display: none;
     }
     footer {
+        margin-top: auto;
         background-color: #0b74de;
         color: white;
         text-align: center;
         padding: 15px;
         font-size: 14px;
-        margin-top: auto;
     }
 </style>
 </head>
+
 <body>
 
 <header>
-    <img src="bnlogo.jpg" alt="Company Logo" class="logo">
+    <img src="bnlogo.jpg" alt="Company Logo">
 </header>
 
 <div class="form-container">
     <h2 id="formTitle">CALCULATOR FOR CIF LCL SHIPMENT FROM SHANGHAI TO INDIA</h2>
+
     <form id="contactForm" action="https://formspree.io/f/xrbygqyq" method="POST">
 
-        <!-- Language Switch -->
-        <label for="languageSelect" id="labelLanguage">Choose Language / 选择语言</label>
+        <!-- LANGUAGE SWITCH -->
+        <label id="labelLanguage" for="languageSelect">Choose Language / 选择语言</label>
         <select id="languageSelect">
             <option value="en">English</option>
             <option value="zh">中文</option>
         </select>
 
-        <label id="labelName" for="name">Contact Name</label>
-        <input type="text" name="name" id="name" required>
+        <label id="labelName">Contact Name</label>
+        <input type="text" id="name" name="name" required>
 
-        <label id="labelEmail" for="email">Email Address</label>
-        <input type="email" name="email" id="email" required placeholder="example@email.com">
+        <label id="labelEmail">Email Address</label>
+        <input type="email" id="email" name="email" required>
 
-        <label id="labelPhone" for="phone">Phone Number</label>
-        <input type="tel" name="phone" id="phone" required pattern="[0-9]{10,15}" title="Phone number must be between 10 and 15 digits">
+        <label id="labelPhone">Phone Number</label>
+        <input type="tel" id="phone" name="phone" required pattern="[0-9]{10,15}">
 
-        <label id="labelCompany" for="company">Company Name</label>
-        <input type="text" name="company" id="company" required>
+        <label id="labelCompany">Company Name</label>
+        <input type="text" id="company" name="company" required>
 
-        <label id="labelCBM" for="cbm">Enter CBM</label>
-        <input type="number" name="cbm" id="cbm" required step="0.01" placeholder="e.g., 12.34">
+        <label id="labelCBM">Enter CBM</label>
+        <input type="number" id="cbm" name="cbm" required step="0.01">
 
-        <label id="labelWeight" for="weight">Enter Weight (Tonne)</label>
-        <input type="number" name="weight" id="weight" required step="1" placeholder="e.g., 12">
+        <label id="labelWeight">Enter Weight (Tonne)</label>
+        <input type="number" id="weight" name="weight" required step="1">
 
-        <label id="labelLocation" for="location">Location</label>
-        <select name="location" id="location" required>
+        <label id="labelLocation">Location</label>
+        <select id="location" name="location" required>
             <option value="">-- Select Location --</option>
             <option value="chennai">Chennai</option>
             <option value="nhava sheva">Nhava Sheva</option>
         </select>
 
-        <label id="labelCargo" for="cargo">Cargo Type</label>
-        <select name="cargo" id="cargo" required>
+        <label id="labelCargo">Cargo Type</label>
+        <select id="cargo" name="cargo" required>
             <option value="">-- Select Cargo Type --</option>
             <option value="general cargo">General Cargo</option>
             <option value="dg cargo">DG Cargo</option>
         </select>
 
-        <input type="hidden" name="Origin Charges" id="originCharges">
-        <input type="hidden" name="Destination Charges" id="destinationCharges">
-        <input type="hidden" name="Thankyou Message" id="thankyoumessage">
-        <input type="hidden" name="Submitted CBM" id="submittedCBM">
-        <input type="hidden" name="Submitted Weight" id="submittedWeight">
+        <!-- Hidden Fields -->
+        <input type="hidden" id="originCharges" name="Origin Charges">
+        <input type="hidden" id="destinationdeliverycharges" name="Destination Delivery Charges">
+        <input type="hidden" id="destinationcfscharges" name="Destination CFS Charges">
+        <input type="hidden" id="destinationCharges" name="Destination Charges">
+        <input type="hidden" id="thankyoumessage" name="Thank You Message">
+        <input type="hidden" id="submittedCBM" name="Submitted CBM">
+        <input type="hidden" id="submittedWeight" name="Submitted Weight">
 
         <button type="submit" id="submitButton">Submit</button>
     </form>
@@ -151,6 +156,7 @@
 </footer>
 
 <script>
+/* ------------------- TRANSLATIONS ------------------- */
 const translations = {
     en: {
         title: "CALCULATOR FOR CIF LCL SHIPMENT FROM SHANGHAI TO INDIA",
@@ -163,19 +169,23 @@ const translations = {
         weight: "Enter Weight (Tonne)",
         location: "Location",
         cargo: "Cargo Type",
+        submit: "Submit",
         locationOptions: { chennai: "Chennai", "nhava sheva": "Nhava Sheva" },
         cargoOptions: { "general cargo": "General Cargo", "dg cargo": "DG Cargo" },
-        submit: "Submit",
-        resultHeading: { chennai: "Chennai CIF Shipment", "nhava sheva": "Nhava Sheva CIF Shipment" },
+
         totalOrigin: "Total Origin Charges: RMB",
+        destinationdeliverycharges: "Destination Delivery Charges: INR",
+        destinationcfscharges: "Destination CFS Charges: INR",
         totalDest: "Total Destination Charges: INR",
+
         note: "Note: Destination Charges (including GST)",
         excl: "Above charges are exclusive of ocean freight",
         check: "Please check with our local agent for ocean freight",
+
         success: "✅ Your form was submitted successfully!",
-        fail: "❌ There was a problem sending your form.",
-        footer: "DG Acceptance Class 2.2/3/4.1/6.1/8/9*<br>📦 Transit Time: Shanghai to Chennai – 20 Days | Shanghai to Nhava Sheva – 22 Days<br>&copy; 2025 Big Navigators Pvt Ltd. All Rights Reserved."
+        fail: "❌ There was a problem sending your form."
     },
+
     zh: {
         title: "上海至印度 CIF LCL 货运计算器",
         language: "选择语言",
@@ -187,32 +197,32 @@ const translations = {
         weight: "输入重量 (吨)",
         location: "目的港",
         cargo: "货物类型",
+        submit: "提交",
         locationOptions: { chennai: "钦奈", "nhava sheva": "纳瓦谢瓦" },
         cargoOptions: { "general cargo": "普通货物", "dg cargo": "危险品货物" },
-        submit: "提交",
-        resultHeading: { chennai: "钦奈 CIF 货运", "nhava sheva": "纳瓦谢瓦 CIF 货运" },
+
         totalOrigin: "起运地费用: RMB",
-        totalDest: "目的地费用: INR",
-        note: "备注：目的地费用已含18%增值税 (GST)",
+        destinationdeliverycharges: "目的地派送费用: INR",
+        destinationcfscharges: "目的地仓库费用 (CFS): INR",
+        totalDest: "目的地总费用: INR",
+
+        note: "备注：目的地费用已包含 18% GST",
         excl: "以上费用不含海运费",
-        check: "请与我们的当地代理确认海运费用",
+        check: "请与我们的当地代理确认海运费",
+
         success: "✅ 表单提交成功！",
-        fail: "❌ 表单提交失败，请重试。",
-        footer: "危险品类别 2.2/3/4.1/6.1/8/9*<br>📦 运输时间：上海至钦奈 – 20 天 | 上海至纳瓦谢瓦 – 22 天<br>&copy; 2025 Big Navigators Pvt Ltd. 版权所有。"
+        fail: "❌ 表单提交失败，请稍后重试。"
     }
 };
 
 let currentLang = "en";
 
-document.getElementById("languageSelect").addEventListener("change", function() {
-    currentLang = this.value;
-    setLanguage(currentLang);
-});
-
+/* ------------------- LANGUAGE SWITCH ------------------- */
 function setLanguage(lang) {
     const t = translations[lang];
+
     document.getElementById("formTitle").textContent = t.title;
-    document.getElementById("labelLanguage").textContent = t.language + " / 选择语言";
+    document.getElementById("labelLanguage").textContent = t.language;
     document.getElementById("labelName").textContent = t.name;
     document.getElementById("labelEmail").textContent = t.email;
     document.getElementById("labelPhone").textContent = t.phone;
@@ -222,91 +232,112 @@ function setLanguage(lang) {
     document.getElementById("labelLocation").textContent = t.location;
     document.getElementById("labelCargo").textContent = t.cargo;
     document.getElementById("submitButton").textContent = t.submit;
-    document.getElementById("footerText").innerHTML = t.footer;
 
-    const locationSelect = document.getElementById("location");
-    const cargoSelect = document.getElementById("cargo");
-    locationSelect.options[1].textContent = t.locationOptions.chennai;
-    locationSelect.options[2].textContent = t.locationOptions["nhava sheva"];
-    cargoSelect.options[1].textContent = t.cargoOptions["general cargo"];
-    cargoSelect.options[2].textContent = t.cargoOptions["dg cargo"];
+    // Dropdown translations
+    const locSel = document.getElementById("location");
+    locSel.options[1].textContent = t.locationOptions.chennai;
+    locSel.options[2].textContent = t.locationOptions["nhava sheva"];
+
+    const cargoSel = document.getElementById("cargo");
+    cargoSel.options[1].textContent = t.cargoOptions["general cargo"];
+    cargoSel.options[2].textContent = t.cargoOptions["dg cargo"];
 }
+
+document.getElementById("languageSelect").addEventListener("change", function () {
+    currentLang = this.value;
+    setLanguage(currentLang);
+});
+
 setLanguage("en");
 
-// Calculation + Result
-document.getElementById("contactForm").addEventListener("submit", async function(e) {
+/* ------------------- FORM CALCULATION + SUBMIT ------------------- */
+document.getElementById("contactForm").addEventListener("submit", async function (e) {
     e.preventDefault();
-    const form = e.target;
-    const cbm = parseFloat(document.getElementById("cbm").value) || 0;
-    const weight = parseInt(document.getElementById("weight").value) || 0;
-    const location = document.getElementById("location").value.toLowerCase();
-    const cargo = document.getElementById("cargo").value.toLowerCase();
+
+    const cbm = parseFloat(document.getElementById("cbm").value);
+    const weight = parseInt(document.getElementById("weight").value);
+    const location = document.getElementById("location").value;
+    const cargo = document.getElementById("cargo").value;
 
     if (!location || !cargo) {
-        alert(currentLang === "en" ? "Please select both location and cargo type." : "请选择目的港和货物类型。");
+        alert("Please select location and cargo type.");
         return;
     }
 
     const CW = Math.max(cbm, weight);
-    let originCharges = 0, destinationCharges = 0;
+    let originCharges = 0;
+    let destinationdeliverycharges = 0;
+    let destinationcfscharges = 0;
+    let destinationCharges = 0;
 
     if (cargo === "general cargo") {
         originCharges = (CW * 40) + 150;
+
         const F = (950 * CW) + 5500 + 7500;
-        const KL1 = F + (F * 0.18);
-        const destinationFactor = (location === "chennai") ? 3500 : 4500;
-        const I = (380 * CW) + (destinationFactor * CW) + 3200;
-        const KL2 = I + (I * 0.18);
-        destinationCharges = KL1 + KL2;
+        destinationdeliverycharges = F * 1.18;
+
+        const destFactor = (location === "chennai" ? 3500 : 4500);
+        const I = (380 * CW) + (destFactor * CW) + 3200;
+        destinationcfscharges = I * 1.18;
+
     } else if (cargo === "dg cargo") {
         originCharges = (CW * 280) + 2210;
+
         const C = (1400 * CW) + 5500 + 7500;
-        const QR1 = C + (C * 0.18);
+        destinationdeliverycharges = C * 1.18;
+
         const W = (380 * CW) + (6200 * CW) + 4200;
-        const QR2 = W + (W * 0.18);
-        destinationCharges = QR1 + QR2;
+        destinationcfscharges = W * 1.18;
     }
 
+    destinationCharges = destinationdeliverycharges + destinationcfscharges;
+
+    // Set hidden field values
     document.getElementById("originCharges").value = originCharges.toFixed(2);
+    document.getElementById("destinationdeliverycharges").value = destinationdeliverycharges.toFixed(2);
+    document.getElementById("destinationcfscharges").value = destinationcfscharges.toFixed(2);
     document.getElementById("destinationCharges").value = destinationCharges.toFixed(2);
-    document.getElementById("thankyoumessage").value = "Thank you for choosing Big Navigators Pvt Ltd.";
     document.getElementById("submittedCBM").value = cbm.toFixed(2);
     document.getElementById("submittedWeight").value = weight;
 
-    const formData = new FormData(form);
+    const formData = new FormData(this);
 
+    let success = false;
     try {
-        const response = await fetch(form.action, { method: form.method, body: formData, headers: { "Accept": "application/json" } });
-        showResult(location, cargo, originCharges, destinationCharges, response.ok);
-        if (response.ok) form.reset();
-    } catch {
-        showResult(location, cargo, originCharges, destinationCharges, false);
+        const res = await fetch(this.action, {
+            method: this.method,
+            body: formData,
+            headers: { "Accept": "application/json" }
+        });
+        success = res.ok;
+    } catch (e) {
+        success = false;
     }
+
+    showResult(location, cargo, originCharges, destinationdeliverycharges, destinationcfscharges, destinationCharges, success);
+
+    if (success) this.reset();
 });
 
-function showResult(location, cargo, originCharges, destinationCharges, success) {
+/* ------------------- RESULT DISPLAY ------------------- */
+function showResult(location, cargo, originCharges, delivery, cfs, totalDest, success) {
     const t = translations[currentLang];
-    const locName = t.locationOptions[location];
-    const cargoName = t.cargoOptions[cargo];
-    const resultBox = document.getElementById("resultBox");
-    resultBox.style.display = "block";
-    resultBox.innerHTML = `
-        <h3>${locName} - ${cargoName}</h3>
+    const result = document.getElementById("resultBox");
+
+    result.style.display = "block";
+    result.innerHTML = `
+        <h3>${t.locationOptions[location]} - ${t.cargoOptions[cargo]}</h3>
         <p><strong>${t.totalOrigin}</strong> ${originCharges.toFixed(2)}</p>
-        <p><strong>${t.totalDest}</strong> ${destinationCharges.toFixed(2)}</p>
+        <p><strong>${t.destinationdeliverycharges}</strong> ${delivery.toFixed(2)}</p>
+        <p><strong>${t.destinationcfscharges}</strong> ${cfs.toFixed(2)}</p>
+        <p><strong>${t.totalDest}</strong> ${totalDest.toFixed(2)}</p>
         <p>${t.note}</p>
         <p>${t.excl}</p>
         <p>${t.check}</p>
         <p style="color:${success ? 'green' : 'red'}">${success ? t.success : t.fail}</p>
     `;
 }
-
-document.getElementById("weight").addEventListener("input", function() {
-    this.value = this.value.replace(/\D/g, "");
-});
-document.getElementById("cbm").addEventListener("blur", function() {
-    if(this.value) this.value = parseFloat(this.value).toFixed(2);
-});
 </script>
+
 </body>
 </html>
