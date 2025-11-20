@@ -151,162 +151,85 @@
 </footer>
 
 <script>
-const translations = {
-    en: {
-        title: "CALCULATOR FOR CIF LCL SHIPMENT FROM SHANGHAI TO INDIA",
-        language: "Choose Language",
-        name: "Contact Name",
-        email: "Email Address",
-        phone: "Phone Number",
-        company: "Company Name",
-        cbm: "Enter CBM",
-        weight: "Enter Weight (Tonne)",
-        location: "Location",
-        cargo: "Cargo Type",
-        locationOptions: { chennai: "Chennai", "nhava sheva": "Nhava Sheva" },
-        cargoOptions: { "general cargo": "General Cargo", "dg cargo": "DG Cargo" },
-        submit: "Submit",
-        resultHeading: { chennai: "Chennai CIF Shipment", "nhava sheva": "Nhava Sheva CIF Shipment" },
-        totalOrigin: "Total Origin Charges: RMB",
-        totalDest: "Total Destination Charges: INR",
-        note: "Note: Destination Charges (including GST)",
-        excl: "Above charges are exclusive of ocean freight",
-        check: "Please check with our local agent for ocean freight",
-        success: "✅ Your form was submitted successfully!",
-        fail: "❌ There was a problem sending your form.",
-        footer: "DG Acceptance Class 2.2/3/4.1/6.1/8/9*<br>📦 Transit Time: Shanghai to Chennai – 20 Days | Shanghai to Nhava Sheva – 22 Days<br>&copy; 2025 Big Navigators Pvt Ltd. All Rights Reserved."
-    },
-    zh: {
-        title: "上海至印度 CIF LCL 货运计算器",
-        language: "选择语言",
-        name: "联系人姓名",
-        email: "电子邮件地址",
-        phone: "电话号码",
-        company: "公司名称",
-        cbm: "输入体积 (CBM)",
-        weight: "输入重量 (吨)",
-        location: "目的港",
-        cargo: "货物类型",
-        locationOptions: { chennai: "钦奈", "nhava sheva": "纳瓦谢瓦" },
-        cargoOptions: { "general cargo": "普通货物", "dg cargo": "危险品货物" },
-        submit: "提交",
-        resultHeading: { chennai: "钦奈 CIF 货运", "nhava sheva": "纳瓦谢瓦 CIF 货运" },
-        totalOrigin: "起运地费用: RMB",
-        totalDest: "目的地费用: INR",
-        note: "备注：目的地费用已含18%增值税 (GST)",
-        excl: "以上费用不含海运费",
-        check: "请与我们的当地代理确认海运费用",
-        success: "✅ 表单提交成功！",
-        fail: "❌ 表单提交失败，请重试。",
-        footer: "危险品类别 2.2/3/4.1/6.1/8/9*<br>📦 运输时间：上海至钦奈 – 20 天 | 上海至纳瓦谢瓦 – 22 天<br>&copy; 2025 Big Navigators Pvt Ltd. 版权所有。"
-    }
-};
-
 let currentLang = "en";
 
 document.getElementById("languageSelect").addEventListener("change", function() {
     currentLang = this.value;
-    setLanguage(currentLang);
 });
 
-function setLanguage(lang) {
-    const t = translations[lang];
-    document.getElementById("formTitle").textContent = t.title;
-    document.getElementById("labelLanguage").textContent = t.language + " / 选择语言";
-    document.getElementById("labelName").textContent = t.name;
-    document.getElementById("labelEmail").textContent = t.email;
-    document.getElementById("labelPhone").textContent = t.phone;
-    document.getElementById("labelCompany").textContent = t.company;
-    document.getElementById("labelCBM").textContent = t.cbm;
-    document.getElementById("labelWeight").textContent = t.weight;
-    document.getElementById("labelLocation").textContent = t.location;
-    document.getElementById("labelCargo").textContent = t.cargo;
-    document.getElementById("submitButton").textContent = t.submit;
-    document.getElementById("footerText").innerHTML = t.footer;
-
-    const locationSelect = document.getElementById("location");
-    const cargoSelect = document.getElementById("cargo");
-    locationSelect.options[1].textContent = t.locationOptions.chennai;
-    locationSelect.options[2].textContent = t.locationOptions["nhava sheva"];
-    cargoSelect.options[1].textContent = t.cargoOptions["general cargo"];
-    cargoSelect.options[2].textContent = t.cargoOptions["dg cargo"];
-}
-setLanguage("en");
-
-// Calculation + Result
+// Calculation + Result Display
 document.getElementById("contactForm").addEventListener("submit", async function(e) {
     e.preventDefault();
     const form = e.target;
+
     const cbm = parseFloat(document.getElementById("cbm").value) || 0;
     const weight = parseInt(document.getElementById("weight").value) || 0;
     const location = document.getElementById("location").value.toLowerCase();
     const cargo = document.getElementById("cargo").value.toLowerCase();
 
-    if (!location || !cargo) {
-        alert(currentLang === "en" ? "Please select both location and cargo type." : "请选择目的港和货物类型。");
-        return;
-    }
-
     const CW = Math.max(cbm, weight);
+
     let originCharges = 0, destinationCharges = 0;
+    let KL1 = 0, KL2 = 0, QR1 = 0, QR2 = 0;
 
     if (cargo === "general cargo") {
+
         originCharges = (CW * 40) + 150;
+
         const F = (950 * CW) + 5500 + 7500;
-        const KL1 = F + (F * 0.18);
+        KL1 = F + (F * 0.18);
+
         const destinationFactor = (location === "chennai") ? 3500 : 4500;
         const I = (380 * CW) + (destinationFactor * CW) + 3200;
-        const KL2 = I + (I * 0.18);
+        KL2 = I + (I * 0.18);
+
         destinationCharges = KL1 + KL2;
+
     } else if (cargo === "dg cargo") {
+
         originCharges = (CW * 280) + 2210;
+
         const C = (1400 * CW) + 5500 + 7500;
-        const QR1 = C + (C * 0.18);
+        QR1 = C + (C * 0.18);
+
         const W = (380 * CW) + (6200 * CW) + 4200;
-        const QR2 = W + (W * 0.18);
+        QR2 = W + (W * 0.18);
+
         destinationCharges = QR1 + QR2;
     }
 
-    document.getElementById("originCharges").value = originCharges.toFixed(2);
-    document.getElementById("destinationCharges").value = destinationCharges.toFixed(2);
-    document.getElementById("thankyoumessage").value = "Thank you for choosing Big Navigators Pvt Ltd.";
-    document.getElementById("submittedCBM").value = cbm.toFixed(2);
-    document.getElementById("submittedWeight").value = weight;
-
-    const formData = new FormData(form);
-
-    try {
-        const response = await fetch(form.action, { method: form.method, body: formData, headers: { "Accept": "application/json" } });
-        showResult(location, cargo, originCharges, destinationCharges, response.ok);
-        if (response.ok) form.reset();
-    } catch {
-        showResult(location, cargo, originCharges, destinationCharges, false);
-    }
-});
-
-function showResult(location, cargo, originCharges, destinationCharges, success) {
-    const t = translations[currentLang];
-    const locName = t.locationOptions[location];
-    const cargoName = t.cargoOptions[cargo];
+    // Show result section
     const resultBox = document.getElementById("resultBox");
     resultBox.style.display = "block";
-    resultBox.innerHTML = `
-        <h3>${locName} - ${cargoName}</h3>
-        <p><strong>${t.totalOrigin}</strong> ${originCharges.toFixed(2)}</p>
-        <p><strong>${t.totalDest}</strong> ${destinationCharges.toFixed(2)}</p>
-        <p>${t.note}</p>
-        <p>${t.excl}</p>
-        <p>${t.check}</p>
-        <p style="color:${success ? 'green' : 'red'}">${success ? t.success : t.fail}</p>
-    `;
-}
 
-document.getElementById("weight").addEventListener("input", function() {
-    this.value = this.value.replace(/\D/g, "");
-});
-document.getElementById("cbm").addEventListener("blur", function() {
-    if(this.value) this.value = parseFloat(this.value).toFixed(2);
+    resultBox.innerHTML = `
+        <h3>${location.toUpperCase()} - ${cargo.toUpperCase()}</h3>
+
+        <h4><u>Origin Charges</u></h4>
+        <p><strong>Total Origin Charges: RMB</strong> ${originCharges.toFixed(2)}</p>
+
+        <h4><u>Destination Charges</u></h4>
+
+        ${
+            cargo === "general cargo"
+            ? `
+                <p>Destination Delivery Charges (KL1): <strong>${KL1.toFixed(2)}</strong></p>
+                <p>Destination CFS Charges (KL2): <strong>${KL2.toFixed(2)}</strong></p>
+            `
+            : `
+                <p>Destination Delivery Charges (QR1): <strong>${QR1.toFixed(2)}</strong></p>
+                <p>Destination CFS Charges (QR2): <strong>${QR2.toFixed(2)}</strong></p>
+            `
+        }
+
+        <p><strong>Total Destination Charges: INR</strong> ${destinationCharges.toFixed(2)}</p>
+
+        <p>Note: Destination Charges (including GST)</p>
+        <p>Above charges are exclusive of ocean freight</p>
+        <p>Please check with our local agent for ocean freight</p>
+    `;
 });
 </script>
+
 </body>
 </html>
