@@ -273,7 +273,7 @@ document.getElementById("contactForm").addEventListener("submit", async function
     if (cargo === "general cargo") {
         originCharges = (CW * 40) + 150;
 
-        const F = (950 * CW) + 5500 + 7500;
+        const F = (950 * CW) + 5000 + 7500;
         destinationdeliverycharges = F * 1.18;
 
         const destFactor = (location === "chennai" ? 3500 : 4500);
@@ -283,10 +283,10 @@ document.getElementById("contactForm").addEventListener("submit", async function
     } else if (cargo === "dg cargo") {
         originCharges = (CW * 280) + 2210;
 
-        const C = (1400 * CW) + 5500 + 7500;
+        const C = (1400 * CW) + 5000 + 7500;
         destinationdeliverycharges = C * 1.18;
 
-        const W = (380 * CW) + (6200 * CW) + 4200;
+        const W = (380 * CW) + (6200 * CW) + 3200;
         destinationcfscharges = W * 1.18;
     }
 
@@ -341,3 +341,4 @@ function showResult(location, cargo, originCharges, delivery, cfs, totalDest, su
 
 </body>
 </html>
+
